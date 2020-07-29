@@ -22,7 +22,8 @@ class MarketTest < MiniTest::Test
     @vendor1.stock(@item2, 7)   
     @vendor2.stock(@item4, 50)    
     @vendor2.stock(@item3, 25)
-    @vendor3.stock(@item1, 65) 
+    @vendor3.stock(@item1, 65)
+    @vendor3.stock(@item3, 10) 
   end 
 
   def test_it_exists_and_has_readable_attributes 
@@ -50,5 +51,16 @@ class MarketTest < MiniTest::Test
   def test_it_can_return_vendors_that_sell_certain_item 
     assert_equal [@vendor1, @vendor3], @market.vendors_that_sell(@item1)
     assert_equal [@vendor2], @market.vendors_that_sell(@item4)
+  end 
+  
+  def test_it_can_return_total_inventory 
+    inventory = {
+      @item1 => { quantity: 100, vendors: @vendor1, @vendor3 },
+      @item2 => { quantity: 7, vendors: @vendor1 },
+      @item4 => { quantity: 50, vendors: @vendor2 },
+      @item3 => { quantity: 35, vendors: @vendor2 }
+    }
+
+   assert_equal inventory, @market.total_inventory
   end 
 end 
