@@ -18,6 +18,11 @@ class MarketTest < MiniTest::Test
     @market.add_vendor(@vendor1)
     @market.add_vendor(@vendor2)
     @market.add_vendor(@vendor3)
+    @vendor1.stock(@item1, 35)    
+    @vendor1.stock(@item2, 7)   
+    @vendor2.stock(@item4, 50)    
+    @vendor2.stock(@item3, 25)
+    @vendor3.stock(@item1, 65) 
   end 
 
   def test_it_exists_and_has_readable_attributes 
@@ -41,4 +46,9 @@ class MarketTest < MiniTest::Test
   def test_it_can_return_vendor_names 
     assert_equal ["Rocky Mountain Fresh", "Ba-Nom-a-Nom", "Palisade Peach Shack"], @market.vendor_names
   end
+
+  def test_it_can_return_vendors_that_sell_certain_item 
+    assert_equal [@vendor1, @vendor3], @market.vendors_that_sell(@item1)
+    assert_equal [@vendor2], @market.vendors_that_sell(@item4)
+  end 
 end 
